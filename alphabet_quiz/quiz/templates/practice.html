@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="main-container">
+  <div>
+    <a href="/" class="button is-text">&lt; return to main menu</a>
+  </div>
+  <h1 class="title">practice</h1>
+  <div>
+    <canvas id="canvas" width="200" height="200"></canvas>
+  </div>
+  <div style="padding: 1rem">
+    <p style="font-size: 0.75rem">the predict letter is {{ correct }}</p>
+    <!-- Use the "lower" filter here -->
+    <p style="margin-top: 0.5rem">Write an uppercase {{ correct }} </p>
+    <p style="margin-top: 0.5rem">Write an uppercase {{ letter }} </p>
+  </div>
+  <div>
+    <form id="practice-form" action="{% url 'practice_post' %}" method="post">
+      {% csrf_token %}
+      <input id="pixels" name="pixels" type="hidden" />
+      <input id="letter" name="letter" type="hidden" value="{{ letter }}" />
+      <input id="correct" name="correct" type="hidden" value="{{ correct }}" />
+      <button
+        type="button"
+        class="button is-success"
+        onclick="practiceAction()"
+      >
+        check my answer
+      </button>
+      <button type="button" class="button is-info" onclick="resetCanvas()">
+        clear
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    startCanvas();
+  });
+</script>
+
+{% endblock %}

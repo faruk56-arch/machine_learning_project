@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="main-container">
+  <h1 class="title">alphabet quiz</h1>
+  <div>
+    <div class="box">
+      <a class="button is-info" href="{% url 'practice_get' %}">practice</a>
+      <p>practice writing the alphabet</p>
+    </div>
+    <div class="box">
+      <a class="button is-info" href="{% url 'practice_numb_get' %}">practice</a>
+      <p>practice writing the numbers</p>
+    </div>
+    <div class="box">
+      <a class="button is-info" href="{% url 'add_data_get' %}">add data</a>
+      <p>improve the model by adding data</p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
