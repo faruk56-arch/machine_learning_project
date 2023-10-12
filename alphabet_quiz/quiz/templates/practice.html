@@ -1,43 +1,112 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+    .main-container {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        width: 80%;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+    h1 {
+        color: #FF5833;
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+    canvas {
+        border: 2px solid #FF5833;
+        border-radius: 8px;
+        width: 300px;
+        height: 300px;
+        margin: 20px auto;
+        display: block;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+    p {
+        color: #555;
+        font-size: 1.2rem;
+        margin-top: 10px;
+    }
+    button {
+        background-color: #FF5833;
+        color: #fff;
+        padding: 10px 20px;
+        margin: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+        font-size: 1rem;
+    }
+    button:hover {
+        background-color: #d94d2a;
+    }
+    a {
+        color: #282726;
+        text-decoration: none;
+        font-size: 1rem;
+        margin-top: 10px;
+    }
+    a:hover {
+        color: #d94d2a;
+    }
+    .button.is-success {
+    background-color: #FF5833;
+    border-color: transparent;
+    color: #fff;
+}
+</style>
 
 <div class="main-container">
-  <div>
-    <a href="/" class="button is-text">&lt; return to main menu</a>
-  </div>
-  <h1 class="title">practice</h1>
-  <div>
-    <canvas id="canvas" width="200" height="200"></canvas>
-  </div>
-  <div style="padding: 1rem">
-    <p style="font-size: 0.75rem">the predict letter is {{ correct }}</p>
-    <!-- Use the "lower" filter here -->
-    <p style="margin-top: 0.5rem">Write an uppercase {{ correct }} </p>
-    <p style="margin-top: 0.5rem">Write an uppercase {{ letter }} </p>
-  </div>
-  <div>
-    <form id="practice-form" action="{% url 'practice_post' %}" method="post">
-      {% csrf_token %}
-      <input id="pixels" name="pixels" type="hidden" />
-      <input id="letter" name="letter" type="hidden" value="{{ letter }}" />
-      <input id="correct" name="correct" type="hidden" value="{{ correct }}" />
-      <button
-        type="button"
-        class="button is-success"
-        onclick="practiceAction()"
-      >
-        check my answer
-      </button>
-      <button type="button" class="button is-info" onclick="resetCanvas()">
-        clear
-      </button>
-    </form>
-  </div>
+    <a href="/" class="back-btn">&lt; Retour au menu principal</a>
+    <h1>Pratiquer</h1>
+    <canvas id="canvas" width="300" height="300"></canvas>
+    <p>La lettre prédite est : {{ correct }}</p>
+    <p>Écrivez en majuscules : {{ correct }} </p>
+    <p>Écrivez en majuscules : {{ letter }} </p>
+    <div>
+        <form id="practice-form" action="{% url 'practice_post' %}" method="post">
+            {% csrf_token %}
+            <input id="pixels" name="pixels" type="hidden" />
+            <input id="letter" name="letter" type="hidden" value="{{ letter }}" />
+            <input id="correct" name="correct" type="hidden" value="{{ correct }}" />
+            <button type="button" class="button is-success" onclick="practiceAction()">
+                Vérifier ma réponse
+            </button>
+            <button type="button" class="button is-info" onclick="resetCanvas()">
+                Effacer
+            </button>
+        </form>
+    </div>
 </div>
 
 <script>
-  $(document).ready(function () {
-    startCanvas();
-  });
+    $(document).ready(function () {
+        startCanvas();
+        $('.button').hover(function() {
+            $(this).animate({
+                opacity: 0.8
+            }, 200);
+        }, function() {
+            $(this).animate({
+                opacity: 1
+            }, 200);
+        });
+    });
 </script>
 
 {% endblock %}

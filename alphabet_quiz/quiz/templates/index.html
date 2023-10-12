@@ -1,21 +1,115 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f8f8;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background-color: #FF5833;
+        color: #ffffff;
+        text-align: center;
+        padding: 20px;
+    }
+    footer {
+        background-color: #FF5833;
+        color: white;  /* couleur du texte du footer */
+        text-align: center;
+        padding: 10px;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+    }
+    footer p {
+        color: white;  /* assure que le texte du paragraphe dans le footer est blanc */
+    }
+    .main-container {
+        text-align: center;
+        margin: 80px 0;
+    }
+    .box-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: stretch;
+        margin-top: 50px;
+    }
+    .box {
+        background-color: #ffffff;
+        border: 2px solid #FF5833;
+        padding: 20px;
+        border-radius: 15px;
+        width: 30%;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        height: 250px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .box:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+    }
+    .button {
+        background-color: #FF5833;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+        text-decoration: none;
+        font-size: 16px;
+    }
+    .button:hover {
+        background-color: #d94d2a;
+    }
+    img {
+        width: 100px;  /* augmenter la taille de l'image */
+        height: 100px;  /* augmenter la taille de l'image */
+        margin-bottom: 20px;
+    }
+    p {
+        margin: 10px 0;
+        color: #333;
+    }
+    h2 {
+        color: #FF5833;
+    }
+</style>
+
+<header>
+    <h1>Digit Recognition</h1>
+</header>
 
 <div class="main-container">
-  <h1 class="title">alphabet quiz</h1>
-  <div>
-    <div class="box">
-      <a class="button is-info" href="{% url 'practice_get' %}">practice</a>
-      <p>practice writing the alphabet</p>
+    <div class="box-container">
+        <div class="box">
+            <img src="{% static 'images/lettre.png' %}" alt="Alphabet">
+            <a class="button" href="{% url 'practice_get' %}">Pratiquer l'Alphabet</a>
+            <p>Apprenez et pratiquez les lettres de l'alphabet</p>
+        </div>
+        <div class="box">
+            <img src="{% static 'images/chiffre.png' %}" alt="Chiffres">
+            <a class="button" href="{% url 'practice_numb_get' %}">Pratiquer les Chiffres</a>
+            <p>Apprenez et pratiquez l'écriture des chiffres</p>
+        </div>
+        <div class="box">
+            <img src="{% static 'images/donne.png' %}" alt="Ajout de données">
+            <a class="button" href="{% url 'add_data_get' %}">Ajouter des Données</a>
+            <p>Améliorer le modèle en ajoutant plus de données</p>
+        </div>
     </div>
-    <div class="box">
-      <a class="button is-info" href="{% url 'practice_numb_get' %}">practice</a>
-      <p>practice writing the numbers</p>
-    </div>
-    <div class="box">
-      <a class="button is-info" href="{% url 'add_data_get' %}">add data</a>
-      <p>improve the model by adding data</p>
-    </div>
-  </div>
 </div>
+
+<footer>
+    <p>&copy; 2023 Digit Recognition.</p>
+</footer>
 
 {% endblock %}
