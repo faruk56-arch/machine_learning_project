@@ -68,17 +68,42 @@ def practice_numb_get(request):
 
 
 # practice_numb_post is the same as practice_post part
+# def practice_numb_post(request):
+#     try:
+#         pixels = request.POST['pixels'].split(',')
+#         img = np.array(pixels).astype(float).reshape(1, 50, 50, 1)
+#         img_resized = cv2.resize(img[0], (28, 28)).reshape(1, 28, 28, 1)
+        
+#         model = keras.models.load_model('chiffre.model')
+#         pred_letter = np.argmax(model.predict(img_resized), axis=-1)
+#         pred_letter = pred_letter[0] 
+#         correct = pred_letter 
+#         return render(request, "practice_numb.html", {'letter': '', 'correct': correct})
+    
+#     except Exception as e:
+#         return render(request, 'error.html')
+
+
 def practice_numb_post(request):
+
     try:
         pixels = request.POST['pixels'].split(',')
         img = np.array(pixels).astype(float).reshape(1, 50, 50, 1)
         img_resized = cv2.resize(img[0], (28, 28)).reshape(1, 28, 28, 1)
-        
+        print(img_resized)
         model = keras.models.load_model('chiffre.model')
+        print(model.predict(img_resized))
         pred_letter = np.argmax(model.predict(img_resized), axis=-1)
-        pred_letter = pred_letter[0] 
-        correct = pred_letter 
-        return render(request, "practice_numb.html", {'letter': '', 'correct': correct})
-    
+        pred_letter = pred_letter[0]
+        correct =pred_letter
+        class_probabilities = model.predict(img_resized)
+        print (class_probabilities)
+        predicted_class = np.argmax(class_probabilities)
+        print (predicted_class)
+        accuracy_percentage = 100 * class_probabilities[0][predicted_class]
+        return render(request, "practice_numb.html", {'letter': accuracy_percentage, 'correct': correct})
+
     except Exception as e:
+        # Logging the exception can be helpful for debugging
+        print(e)
         return render(request, 'error.html')
